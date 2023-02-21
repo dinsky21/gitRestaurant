@@ -14,7 +14,9 @@ const adminServices = {
   postRestaurant: (req, cb) => {
     const { name, tel, address, openingHours, description, categoryId } = req.body
     if (!name) throw new Error('Restaurant name is required!')
+
     const { file } = req
+
     imgurFileHandler(file)
       .then(filePath => Restaurant.create({
         name,
@@ -38,10 +40,9 @@ const adminServices = {
         }
         return restaurant.destroy()
       })
-      .then(deletedRestaurant => {
-        cb(null, { restaurant: deletedRestaurant })
-      })
+      .then(deletedRestaurant => cb(null, { restaurant: deletedRestaurant }))
       .catch(err => cb(err))
   }
 }
+
 module.exports = adminServices
